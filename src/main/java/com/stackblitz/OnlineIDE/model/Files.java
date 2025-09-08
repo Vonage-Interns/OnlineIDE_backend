@@ -34,6 +34,18 @@ public class Files {
     @Column(name = "file_type", nullable = false)
     private String type;
 
+<<<<<<< HEAD
+=======
+    //    @Column(columnDefinition = "TEXT")
+    //    private String content;
+
+    //content in json columndefination in json format
+    //    Hibernate will send the String value as-is, but cast it to JSON in the SQL statement.
+    //    Postgres accepts the casted value and stores it as JSON.
+    //    On reading, Postgres casts JSON back to text, so you get a String in Java.
+    // This will store the content as JSON
+    // The @ColumnTransformer is used to handle the conversion between JSON and text
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
     @Column(columnDefinition = "json")
     @ColumnTransformer(
             write = "?::json",

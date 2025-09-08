@@ -35,11 +35,16 @@ public class FileService {
 
     public FileResponseDTO  getFileById(Long id, String userId) {
 
+<<<<<<< HEAD
         Users user = UserRepo.findById(Integer.valueOf(userId))
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Files file = filesRepository.findById(id)
                 .orElseThrow(() -> new FileNotFoundException("File not found"));
+=======
+        Users user = UserRepo.findById(Integer.valueOf(userId)).orElseThrow(() -> new UserNotFoundException("User not found"));
+        Files file = filesRepository.findById(id).orElseThrow(() -> new FileNotFoundException("File not found"));
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
         return FileResponseDTO.builder()
                 .id(file.getId())
@@ -73,7 +78,11 @@ public class FileService {
         Files file = Files.builder()
                 .name(dto.getFileName())
                 .type(dto.getType())
+<<<<<<< HEAD
                 .contentJson(contentJsonString)
+=======
+                .contentJson(contentJsonString) // update for content json
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
                 .sizeInKb((long) (contentJsonString.length() / 1024))
                 .project(project)
                 .folder(folder)
@@ -87,6 +96,7 @@ public class FileService {
                 .id(file.getId())
                 .name(file.getName())
                 .type(file.getType())
+<<<<<<< HEAD
                 .content(file.getContentJson())
                 .build();
     }
@@ -101,6 +111,16 @@ public class FileService {
         Files file = filesRepository.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundException("File not found"));
 
+=======
+                .content(file.getContentJson()) //update for content json
+                .build();
+    }
+
+
+    public FileTreeDTO deleteFile(long fileId) {
+        Files file = filesRepository.findById(fileId)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
         filesRepository.deleteById(fileId);
         FileTreeDTO fileTreeDTO = new FileTreeDTO(
                 file.getName()
@@ -109,6 +129,7 @@ public class FileService {
     }
 
     @Transactional
+<<<<<<< HEAD
     public FileTreeDTO updateFileContent(long fileId, UpdateFileContentRequest request, String userId) {
 
         Users user = UserRepo.findById(Integer.valueOf(userId))
@@ -116,10 +137,19 @@ public class FileService {
 
         Files updatedFile = filesRepository.findById(fileId)
                 .orElseThrow(() -> new FileNotFoundException("File not found"));
+=======
+    public FileTreeDTO updateFileContent(long fileId, UpdateFileContentRequest request) {
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
         if (request.getContent() == null || request.getContent().isEmpty()) {
             throw new IllegalArgumentException("No updates provided");
         }
+<<<<<<< HEAD
+=======
+        // fetch updated file to return DTO
+        Files updatedFile = filesRepository.findById(fileId)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
 
         for (Map.Entry<String, String> entry : request.getContent().entrySet()) {
@@ -127,6 +157,10 @@ public class FileService {
             filesRepository.updateLine(fileId, path, entry.getValue());
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
         FileTreeDTO dto = new FileTreeDTO();
         dto.setId(updatedFile.getId());
         dto.setName(updatedFile.getName());
@@ -134,6 +168,7 @@ public class FileService {
         return dto;
     }
 
+<<<<<<< HEAD
     public FileNameUpdateDTO UpdateFileName(FileNameUpdateDTO fileNameUpdateDTO, String userId){
 
         Users user = UserRepo.findById(Integer.valueOf(userId))
@@ -142,6 +177,10 @@ public class FileService {
         Files files = filesRepository.findById(fileNameUpdateDTO.getFileId())
                 .orElseThrow(() -> new FileNotFoundException("File not found"));
 
+=======
+    public FileNameUpdateDTO UpdateFileName(FileNameUpdateDTO fileNameUpdateDTO){
+        Files files = filesRepository.findById(fileNameUpdateDTO.getFileId()).orElseThrow(() -> new FileNotFoundException("File not found"));
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
         files.setName(fileNameUpdateDTO.getFileName());
         filesRepository.save(files);
 

@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
 
+<<<<<<< HEAD
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
 
 	//for error validation
@@ -47,6 +48,29 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.mockito:mockito-core'
+=======
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9' // OpenAPI/Swagger UI for API documentation
+
+// for error validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // Bean validation support
+
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5") // JWT API for token creation/parsing
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5") // JWT implementation (runtime)
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2") // JWT JSON serialization/deserialization
+
+	implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security for authentication/authorization
+	testImplementation 'org.springframework.security:spring-security-test' // Security testing utilities
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Spring Data JPA for ORM/database access
+	implementation 'org.springframework.boot:spring-boot-starter-web' // Spring MVC for building REST APIs
+	compileOnly 'org.projectlombok:lombok' // Lombok for reducing boilerplate code (compile-time only)
+	developmentOnly 'org.springframework.boot:spring-boot-devtools' // DevTools for hot reload and development features
+	runtimeOnly 'org.postgresql:postgresql' // PostgreSQL JDBC driver (runtime)
+	annotationProcessor 'org.projectlombok:lombok' // Lombok annotation processor
+	testImplementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // Spring Boot test starter (JUnit, Mockito, etc.)
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // JUnit Platform launcher (runtime for tests)
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 }
 
 tasks.named('test') {

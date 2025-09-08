@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 # Online IDE - Backend
 
 This is the backend service for the **Online IDE** project, built with **Spring Boot** and **Gradle**.  

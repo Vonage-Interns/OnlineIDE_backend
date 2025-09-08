@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class UpdateProjectName {
+<<<<<<< HEAD
         private Long id;
         private String updateName;
+=======
+    private Long id;
+    private String updateName;
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 }

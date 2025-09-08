@@ -4,12 +4,19 @@ package com.stackblitz.OnlineIDE.controller;
 import com.stackblitz.OnlineIDE.common.ApiResponse;
 import com.stackblitz.OnlineIDE.dto.*;
 import com.stackblitz.OnlineIDE.service.FolderService;
+<<<<<<< HEAD
 import com.stackblitz.OnlineIDE.service.JWTservice;
+=======
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 import com.stackblitz.OnlineIDE.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
 import org.springframework.security.core.context.SecurityContextHolder;
+=======
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +30,7 @@ public class ProjectControler {
 
     private final ProjectService projectService;
 
+<<<<<<< HEAD
     private final JWTservice jwTservice;
 
     private final FolderService folderService;
@@ -35,15 +43,29 @@ public class ProjectControler {
                     .getAuthentication()
                     .getPrincipal();
 
+=======
+    private final FolderService folderService;
+
+    //get all projects
+
+    @GetMapping
+    public ResponseEntity<?> getAllProjects(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
             String userId = userDetails.getUsername();
 
             List<ProjectListDTO> projects = projectService.getProjects(userId);
 
+<<<<<<< HEAD
             ApiResponse<List<ProjectListDTO>> apiResponse = new ApiResponse<>("Projects fetched", projects);
+=======
+            ApiResponse apiResponse = new ApiResponse("Projects fetched", projects);
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
             return ResponseEntity.ok(apiResponse);
 
         } catch (Exception e) {
             e.printStackTrace();
+<<<<<<< HEAD
             ApiResponse<List<ProjectListDTO>> errorResponse = new ApiResponse<>(
                     "Failed to Fetch Projects",
                     null
@@ -74,6 +96,23 @@ public class ProjectControler {
             );
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 
+=======
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to Fetch Projects");
+        }
+    }
+
+
+    @GetMapping("/{projectId}/root")
+    public ResponseEntity<?> getProjectRootItems(@PathVariable Long projectId, @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            String userId = userDetails.getUsername();
+
+            ProjectTreeResponse response = folderService.getRootTree(projectId, userId);
+            return ResponseEntity.ok(new ApiResponse("Root items fetched", response));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch root items");
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
         }
     }
 
@@ -83,12 +122,18 @@ public class ProjectControler {
             @PathVariable Long projectId,
             @PathVariable Long folderId,
             @RequestParam(defaultValue = "0") int page,
+<<<<<<< HEAD
             @RequestParam(defaultValue = "10") int size) {
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
+=======
+            @RequestParam(defaultValue = "10") int size,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
         String userId = userDetails.getUsername();
 
@@ -101,6 +146,7 @@ public class ProjectControler {
         return ResponseEntity.ok(response);
     }
 
+<<<<<<< HEAD
     @PostMapping
     public ResponseEntity<ApiResponse<ProjectDTO>> createProject(@RequestBody ProjectDTO projectDTO) {
 
@@ -108,6 +154,13 @@ public class ProjectControler {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
+=======
+
+
+    @PostMapping
+    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO,
+                                           @AuthenticationPrincipal UserDetails userDetails) {
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
         String userId = userDetails.getUsername();
 
@@ -124,6 +177,7 @@ public class ProjectControler {
 
     @PatchMapping("/updateProjectName")
     public ResponseEntity<ApiResponse<ProjectDTO>> updateProjectName(
+<<<<<<< HEAD
             @RequestBody UpdateProjectName updateProjectName) {
 
         String userId = ((UserDetails) SecurityContextHolder
@@ -131,6 +185,11 @@ public class ProjectControler {
                 .getAuthentication()
                 .getPrincipal())
                 .getUsername();
+=======
+            @RequestBody UpdateProjectName updateProjectName, @AuthenticationPrincipal UserDetails userDetails) {
+
+        String userId = userDetails.getUsername();
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
         ProjectDTO updatedProject = projectService.updateProjectName(updateProjectName, userId);
 
@@ -143,6 +202,7 @@ public class ProjectControler {
     }
 
 
+<<<<<<< HEAD
 
     @DeleteMapping("{projectId}")
     public ResponseEntity<ApiResponse<ProjectCreationResponse>> deleteProject(@PathVariable long projectId) {
@@ -151,6 +211,13 @@ public class ProjectControler {
                     .getContext()
                     .getAuthentication()
                     .getPrincipal();
+=======
+    //delete project each and every folder and files i have to delete
+
+    @DeleteMapping("{projectId}")
+    public ResponseEntity<?> deleteProject(@PathVariable long projectId,  @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 
             String userId = userDetails.getUsername();
 
@@ -164,12 +231,16 @@ public class ProjectControler {
             );
             return ResponseEntity.ok().body(apiResponse);
         } catch (Exception e) {
+<<<<<<< HEAD
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
             ApiResponse<ProjectCreationResponse> errorResponse = new ApiResponse<>(
                     "Failed to delete item",
                     null
             );
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+=======
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+>>>>>>> a472369 (code-update: added unit testing controller and repo layer)
         }
     }
 }
