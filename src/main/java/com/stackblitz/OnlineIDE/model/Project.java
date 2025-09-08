@@ -1,17 +1,15 @@
 package com.stackblitz.OnlineIDE.model;
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
-=======
-import lombok.Builder;
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "project")
+@NoArgsConstructor
 public class Project {
 
     @Id
@@ -33,9 +31,5 @@ public class Project {
 
     @Column(nullable = false, unique = true)
     private String key;
-
-
-
-
 
 }

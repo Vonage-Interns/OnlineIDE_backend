@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 # Online IDE - Backend
 
 This is the backend service for the **Online IDE** project, built with **Spring Boot** and **Gradle**.  
@@ -19,7 +16,7 @@ It provides APIs for managing projects, folders, files, and executing code in ja
 ## 📦 Prerequisites
 Before running the backend, make sure you have:
 - [JDK 17](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
-- [PostgreSQL](https://www.postgresql.org/download/) (for a database)
+`- [PostgreSQL](https://www.postgresql.org/download/) (for a database)
 
 
 

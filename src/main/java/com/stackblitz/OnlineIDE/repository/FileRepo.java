@@ -10,10 +10,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-<<<<<<< HEAD
-=======
+
 import org.springframework.transaction.annotation.Transactional;
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
+
 
 import java.util.List;
 
@@ -25,23 +24,18 @@ public interface FileRepo extends JpaRepository<Files, Long> {
 
     Page<Files> findByProjectAndFolder(Project project, Folders folder, Pageable pageable);
 
-<<<<<<< HEAD
-=======
     @Transactional
     @Modifying
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
     Integer deleteByProject(Project project);
 
     void deleteByFolderId(Long folderId);
 
 
-<<<<<<< HEAD
 
-=======
     //content_json::jsonb: Converts the content_json column to JSONB type, so you can use JSON functions on it.
     //cast(:path as text[]): Turns the path you provide (like {key}) into an array of text, which tells PostgreSQL where in the JSON to update.
     //to_jsonb(cast(:newValue as text)): Takes your new value, makes sure it’s text, and then converts it to JSONB so it can be stored in the JSON column.
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
+
     @Modifying
     @Query(value = "UPDATE files " +
             "SET content_json = jsonb_set(content_json::jsonb, cast(:path as text[]), to_jsonb(cast(:newValue as text)), true), " +

@@ -76,12 +76,9 @@ public class FoldersService {
     }
 
 
-<<<<<<< HEAD
-=======
 
     @Transactional
     public FolderTreeDTO deleteFolder(long folderId, String userId) {
-
         Folders folders = folderRepo.findById(folderId).orElseThrow(() -> new FolderNotFoundException("Folder not found"));
         fileRepo.deleteByFolderId(folderId);
         folderRepo.deleteById(folderId);
@@ -96,7 +93,7 @@ public class FoldersService {
 
     }
 
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
+
     public FolderResponseDTO updateFolderName(UpdateName updateName, String userId) {
         Folders folder = folderRepo.findById(updateName.getFolderId())
                 .orElseThrow(() -> new RuntimeException("Folder not found"));
@@ -136,23 +133,5 @@ public class FoldersService {
                 .parentFolderId(saved.getParentFolderId() != null ? saved.getParentFolderId().getId() : null)
                 .build();
     }
-<<<<<<< HEAD
 
-    @Transactional
-    public FolderTreeDTO deleteFolder(long folderId, String userId) {
-
-        Folders folders = folderRepo.findById(folderId).orElseThrow(() -> new FolderNotFoundException("Folder not found"));
-        fileRepo.deleteByFolderId(folderId);
-        folderRepo.deleteById(folderId);
-
-        FolderTreeDTO folderTreeDTO = new FolderTreeDTO(
-                folders.getName()
-        );
-
-        return folderTreeDTO;
-
-
-    }
-=======
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 }

@@ -2,10 +2,6 @@ package com.stackblitz.OnlineIDE.model;
 
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
-=======
-import lombok.Builder;
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,10 +13,6 @@ import java.util.List;
 @Table(name = "folder" , uniqueConstraints = {
         @UniqueConstraint(columnNames = {"project_id", "parent_folder_id", "name"})
 })
-<<<<<<< HEAD
-=======
-
->>>>>>> a472369 (code-update: added unit testing controller and repo layer)
 public class Folders {
 
     @Id
