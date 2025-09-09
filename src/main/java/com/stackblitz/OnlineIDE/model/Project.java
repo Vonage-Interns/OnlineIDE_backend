@@ -2,12 +2,14 @@ package com.stackblitz.OnlineIDE.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "project")
+@NoArgsConstructor
 public class Project {
 
     @Id
@@ -29,9 +31,5 @@ public class Project {
 
     @Column(nullable = false, unique = true)
     private String key;
-
-
-
-
 
 }

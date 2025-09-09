@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class UpdateProjectName {
-        private Long id;
-        private String updateName;
+
+    private Long id;
+    private String updateName;
+
 }

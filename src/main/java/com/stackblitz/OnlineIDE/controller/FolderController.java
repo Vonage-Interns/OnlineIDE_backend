@@ -7,7 +7,7 @@ import com.stackblitz.OnlineIDE.service.JWTservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/folders")
 @RequiredArgsConstructor
 @CrossOrigin
-public class FolderControler {
+public class FolderController {
 
     private final FoldersService folderService;
 
@@ -23,11 +23,10 @@ public class FolderControler {
 
     @PostMapping
     public ResponseEntity<FolderResponseDTO> createFolder(
-            @RequestBody FolderDTO folderDTO) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
+
+            @RequestBody FolderDTO folderDTO,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
 
         String userId = userDetails.getUsername();
 
@@ -39,12 +38,9 @@ public class FolderControler {
 
     @PatchMapping("/rename")
     public ResponseEntity<FolderResponseDTO> updateFolderName(
-            @RequestBody UpdateName updateName) {
+            @RequestBody UpdateName updateName,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
 
         String userId = userDetails.getUsername();
 
@@ -54,29 +50,25 @@ public class FolderControler {
     }
 
     @DeleteMapping("/{folderId}")
-    public ResponseEntity<ApiResponse<FolderTreeDTO>> deleteFolder(@PathVariable long folderId){
+
+    public ResponseEntity<?> deleteFolder(@PathVariable long folderId,  @AuthenticationPrincipal UserDetails userDetails){
         try {
-            UserDetails userDetails = (UserDetails) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
-                    .getPrincipal();
+
 
             String userId = userDetails.getUsername();
 
             FolderTreeDTO folderTreeDTO =  folderService.deleteFolder(folderId, userId);
-            ApiResponse<FolderTreeDTO> apiResponse = new ApiResponse(
-                    "Folder delete succesfully",
+
+            ApiResponse apiResponse = new ApiResponse(
+                    "Folder delete successfully",
                     folderTreeDTO
             );
             return ResponseEntity.ok(apiResponse);
 
         }catch (Exception e){
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-            ApiResponse<FolderTreeDTO> errorResponse = new ApiResponse<>(
-                    "Failed to delete Folder",
-                    null
-            );
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
         }
     }
 }

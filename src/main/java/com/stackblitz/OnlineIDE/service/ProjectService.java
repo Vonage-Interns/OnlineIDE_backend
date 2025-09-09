@@ -1,6 +1,5 @@
 package com.stackblitz.OnlineIDE.service;
 
-import com.stackblitz.OnlineIDE.common.ApiResponse;
 import com.stackblitz.OnlineIDE.dto.ProjectDTO;
 import com.stackblitz.OnlineIDE.dto.ProjectListDTO;
 import com.stackblitz.OnlineIDE.dto.UpdateProjectName;
@@ -14,15 +13,9 @@ import com.stackblitz.OnlineIDE.repository.FolderRepo;
 import com.stackblitz.OnlineIDE.repository.ProjectRepo;
 import com.stackblitz.OnlineIDE.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -80,6 +73,7 @@ public class ProjectService {
     }
 
 
+    @Transactional
     public ProjectDTO deleteProject(long projectId, String userId){
         Project project  = projectRepo.findById(projectId)
                 .orElseThrow(() -> new ProjectNotFoundException("Project not found"));

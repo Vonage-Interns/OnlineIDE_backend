@@ -76,6 +76,24 @@ public class FoldersService {
     }
 
 
+
+    @Transactional
+    public FolderTreeDTO deleteFolder(long folderId, String userId) {
+        Folders folders = folderRepo.findById(folderId).orElseThrow(() -> new FolderNotFoundException("Folder not found"));
+        fileRepo.deleteByFolderId(folderId);
+        folderRepo.deleteById(folderId);
+
+
+        FolderTreeDTO folderTreeDTO = new FolderTreeDTO(
+                folders.getName()
+        );
+
+        return folderTreeDTO;
+
+
+    }
+
+
     public FolderResponseDTO updateFolderName(UpdateName updateName, String userId) {
         Folders folder = folderRepo.findById(updateName.getFolderId())
                 .orElseThrow(() -> new RuntimeException("Folder not found"));
@@ -116,19 +134,4 @@ public class FoldersService {
                 .build();
     }
 
-    @Transactional
-    public FolderTreeDTO deleteFolder(long folderId, String userId) {
-
-        Folders folders = folderRepo.findById(folderId).orElseThrow(() -> new FolderNotFoundException("Folder not found"));
-        fileRepo.deleteByFolderId(folderId);
-        folderRepo.deleteById(folderId);
-
-        FolderTreeDTO folderTreeDTO = new FolderTreeDTO(
-                folders.getName()
-        );
-
-        return folderTreeDTO;
-
-
-    }
 }

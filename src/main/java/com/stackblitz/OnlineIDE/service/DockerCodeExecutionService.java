@@ -2,18 +2,13 @@ package com.stackblitz.OnlineIDE.service;
 
 import com.stackblitz.OnlineIDE.dto.RunCodeResponse;
 import com.stackblitz.OnlineIDE.exceptions.UnsupportLanguageException;
-import com.stackblitz.OnlineIDE.repository.UserRepo;
-import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
-
 public class DockerCodeExecutionService {
+    public  RunCodeResponse runCode(String language, String code) {
 
-    private final UserRepo UserRepo;
-
-    public RunCodeResponse runCode(String language, String code) {
         try {
             String image;
             String runCommand;
@@ -21,13 +16,13 @@ public class DockerCodeExecutionService {
             switch (language.toLowerCase()) {
                 case "js", "javascript" -> {
                     image = "node:20";
-                    // echo "console.log('Hello')" | node
+
                     String escapedCode = code.replace("\"", "\\\"").replace("\n", "\\n");
                     runCommand = "echo \"" + escapedCode + "\" | node";
                 }
                 default -> throw new UnsupportLanguageException("Unsupported language: " + language);
             }
-            //what is processBuilder ?
+
             //It's a workflow tool that allows your system admin to create new processes without writing code,
             // and creates shortcuts for users to accomplish repetitive and time consuming tasks with the click of a button
 

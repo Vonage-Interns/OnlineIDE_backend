@@ -2,6 +2,9 @@ package com.stackblitz.OnlineIDE.controller;
 
 import com.stackblitz.OnlineIDE.common.ApiResponse;
 import com.stackblitz.OnlineIDE.dto.UserResponse;
+
+import com.stackblitz.OnlineIDE.dto.UserSignupResponseDTO;
+
 import com.stackblitz.OnlineIDE.model.Users;
 import com.stackblitz.OnlineIDE.service.JWTservice;
 import com.stackblitz.OnlineIDE.service.UserService;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class UserAuthControler {
+public class UserAuthController {
 
     private final UserService userService;
 
@@ -29,7 +32,8 @@ public class UserAuthControler {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<UserResponse>> signUp(@Valid @RequestBody Users user, BindingResult result) {
+    public ResponseEntity<ApiResponse<UserSignupResponseDTO>> signUp(@Valid @RequestBody Users user, BindingResult result) {
+
         if (result.hasErrors()) {
             String errorMessage = result.getAllErrors().get(0).getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -39,19 +43,22 @@ public class UserAuthControler {
         try {
             Users savedUser = userService.signUp(user);
 
-            UserResponse userResponse = new UserResponse(
-                    savedUser.getFirstName()
-            );
+            UserSignupResponseDTO userSignupResponseDTO = new UserSignupResponseDTO();
+            userSignupResponseDTO.setFirstName(savedUser.getFirstName());
 
-            ApiResponse<UserResponse> response = new ApiResponse<>(
+
+            ApiResponse<UserSignupResponseDTO> response = new ApiResponse<>(
                     "Registration successful",
-                    userResponse
+                    userSignupResponseDTO
+
             );
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (Exception e) {
-            ApiResponse<UserResponse> errorResponse = new ApiResponse<>(
+
+            ApiResponse<UserSignupResponseDTO> errorResponse = new ApiResponse<>(
+
                     "Registration failed: " + e.getMessage(),
                     null
             );
@@ -85,6 +92,7 @@ public ResponseEntity<ApiResponse<UserResponse>> signin(@RequestBody Users user)
             // Build response with proper name
             UserResponse userData = new UserResponse(
                     dbUser.getFirstName(),
+                    null,
                     jwt
             );
             ApiResponse<UserResponse> response = new ApiResponse<>(

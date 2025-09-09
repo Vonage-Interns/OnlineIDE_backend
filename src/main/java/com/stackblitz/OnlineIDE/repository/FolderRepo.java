@@ -17,6 +17,7 @@ public interface FolderRepo extends JpaRepository<Folders, Long> {
     Integer deleteByProject(Project project);
 
 
+
     boolean existsByProject_IdAndParentFolderId_IdAndName(Long projectId, Long parentFolderId, String name);
 
     // For root folders (parent is NULL)

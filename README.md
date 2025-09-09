@@ -1,3 +1,4 @@
+
 # Online IDE - Backend
 
 This is the backend service for the **Online IDE** project, built with **Spring Boot** and **Gradle**.  
@@ -29,6 +30,11 @@ cd OnlineIDE_backend
 
 ## Configure Database
 
+#### Create a .envproperties file
+```
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 #### Create a PostgreSQL database
 ```sql
 CREATE DATABASE onlineIDE;
@@ -36,9 +42,10 @@ CREATE DATABASE onlineIDE;
 #### Update the database connection
 Edit src/main/resources/application.properties and update with your credentials:
 ```
+spring.config.import=file:env.properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/onlineIDE
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
 ```
 ▶️ Run the backend
 ```bash
