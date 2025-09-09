@@ -20,10 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class FolderControlerTest {
+class FolderControllerTest {
 
     @InjectMocks
-    private FolderControler folderControler;
+    private FolderController folderController;
 
     @Mock
     private FoldersService foldersService;
@@ -59,7 +59,7 @@ class FolderControlerTest {
         when(userDetails.getUsername()).thenReturn(userID);
         when(foldersService.createFolder(folderDTO, userID)).thenReturn(folderResponseDTO);
 
-        ResponseEntity<?> response = folderControler.createFolder(folderDTO, userDetails);
+        ResponseEntity<?> response = folderController.createFolder(folderDTO, userDetails);
 
         assertEquals(201, response.getStatusCode().value());
         FolderResponseDTO responseBody = (FolderResponseDTO) response.getBody();
@@ -68,7 +68,7 @@ class FolderControlerTest {
     }
 
     @Test
-    void updateFolderName_shouldReturnOkResponse_whenFolderNameUpdatedSuccesfully() {
+    void updateFolderName_shouldReturnOkResponse_whenFolderNameUpdatedSuccessfully() {
         String userID = "42";
 
         UpdateName updateName = UpdateName.builder()
@@ -86,7 +86,7 @@ class FolderControlerTest {
         when(userDetails.getUsername()).thenReturn(userID);
         when(foldersService.updateFolderName(updateName, userID)).thenReturn(folderResponseDTO);
 
-        ResponseEntity<?> response = folderControler.updateFolderName(updateName, userDetails);
+        ResponseEntity<?> response = folderController.updateFolderName(updateName, userDetails);
 
 
         assertEquals(200, response.getStatusCode().value());
@@ -109,12 +109,12 @@ class FolderControlerTest {
         when(userDetails.getUsername()).thenReturn(userID);
         when(foldersService.deleteFolder(folderId, userID)).thenReturn(folderTreeDTO);
 
-        ResponseEntity<?> response = folderControler.deleteFolder(folderId, userDetails);
+        ResponseEntity<?> response = folderController.deleteFolder(folderId, userDetails);
 
         assertEquals(200, response.getStatusCode().value());
 
         ApiResponse apiResponse = (ApiResponse) response.getBody();
-        assertEquals("Folder delete succesfully", apiResponse.getMessage());
+        assertEquals("Folder delete successfully", apiResponse.getMessage());
         assertEquals(folderTreeDTO, apiResponse.getData());
 
     }

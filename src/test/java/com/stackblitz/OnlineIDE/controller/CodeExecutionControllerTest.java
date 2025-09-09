@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CodeExecutionControlerTest {
+class CodeExecutionControllerTest {
 
     @Mock
     private DockerCodeExecutionService dockerCodeExecutionService;
@@ -31,7 +31,7 @@ class CodeExecutionControlerTest {
     private FileRepo fileRepo;
 
     @InjectMocks
-    private CodeExecutionControler codeExecutionControler;
+    private CodeExecutionController codeExecutionController;
 
     @Test
     void run_success() throws Exception {
@@ -52,7 +52,7 @@ class CodeExecutionControlerTest {
         when(dockerCodeExecutionService.runCode(eq(language), anyString())).thenReturn(runCodeResponse);
 
         RunCodeRequest request = new RunCodeRequest(fileId, fileName);
-        ResponseEntity<?> response = codeExecutionControler.run(request);
+        ResponseEntity<?> response = codeExecutionController.run(request);
 
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());

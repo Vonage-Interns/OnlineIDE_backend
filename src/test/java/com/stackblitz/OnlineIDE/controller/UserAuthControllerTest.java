@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-class UserAuthControlerTest {
+class UserAuthControllerTest {
 
     @Mock
     private UserService userService;
@@ -34,7 +34,7 @@ class UserAuthControlerTest {
     private AuthenticationManager authenticationManager;
 
     @InjectMocks
-    private UserAuthControler userAuthControler;
+    private UserAuthController userAuthController;
 
     @BeforeEach
     void setUp() {
@@ -52,7 +52,7 @@ class UserAuthControlerTest {
 
         when(userService.signUp(user)).thenThrow(new RuntimeException("Email already registered"));
 
-        ResponseEntity<ApiResponse<UserSignupResponseDTO>> response = userAuthControler.signUp(user, mockBindingResult);
+        ResponseEntity<ApiResponse<UserSignupResponseDTO>> response = userAuthController.signUp(user, mockBindingResult);
 
         assertEquals(400, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -77,7 +77,7 @@ class UserAuthControlerTest {
         when(userService.getUserByEmail("john@example.com")).thenReturn(dbUser);
         when(jwtService.generateToken(dbUser)).thenReturn("mocked-jwt-token");
 
-        ResponseEntity<ApiResponse<UserResponse>> response = userAuthControler.signin(user);
+        ResponseEntity<ApiResponse<UserResponse>> response = userAuthController.signin(user);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -95,7 +95,7 @@ class UserAuthControlerTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new BadCredentialsException("Invalid credentials"));
 
-        ResponseEntity<ApiResponse<UserResponse>> response = userAuthControler.signin(user);
+        ResponseEntity<ApiResponse<UserResponse>> response = userAuthController.signin(user);
 
         assertEquals(401, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -108,7 +108,7 @@ class UserAuthControlerTest {
         user.setEmail("");
         user.setPassword("");
 
-        ResponseEntity<ApiResponse<UserResponse>> response = userAuthControler.signin(user);
+        ResponseEntity<ApiResponse<UserResponse>> response = userAuthController.signin(user);
 
         assertEquals(400, response.getStatusCodeValue());
         assertNotNull(response.getBody());

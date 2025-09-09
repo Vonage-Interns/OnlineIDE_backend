@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
-public class ProjectControler {
+public class ProjectController {
 
     private final ProjectService projectService;
 
@@ -79,7 +79,7 @@ public class ProjectControler {
         FolderChildrenResponseDTO response = folderService.getFolderChildren(projectId, folderId, userId, page, size);
 
         ApiResponse<FolderChildrenResponseDTO> apiResponse = new ApiResponse(
-                "Created project succesfully",
+                "Created project successfully",
                 response
         );
         return ResponseEntity.ok(response);
@@ -98,7 +98,7 @@ public class ProjectControler {
         ProjectDTO createdProject = projectService.createProject(projectDTO, userId);
 
         ApiResponse<ProjectDTO> apiResponse = new ApiResponse(
-                "Created project succesfully",
+                "Created project successfully",
                 createdProject
         );
 

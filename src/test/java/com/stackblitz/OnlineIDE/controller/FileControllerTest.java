@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class FileControlerTest {
+class FileControllerTest {
 
     @InjectMocks
-    private FileControler fileControler;
+    private FileController fileController;
 
     @Mock
     private FileService fileService;
@@ -56,7 +56,7 @@ class FileControlerTest {
         when(userDetails.getUsername()).thenReturn(userId);
         when(fileService.getFileById(fileId, userId)).thenReturn(fileResponseDTO);
 
-        ResponseEntity<?> response = fileControler.getFile(fileId, userDetails);
+        ResponseEntity<?> response = fileController.getFile(fileId, userDetails);
 
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());
@@ -75,7 +75,7 @@ class FileControlerTest {
         when(userDetails.getUsername()).thenReturn(userId);
         when(fileService.getFileById(fileId, userId)).thenThrow(new FileNotFoundException("File not Found"));
 
-        ResponseEntity<?> response = fileControler.getFile(fileId, userDetails);
+        ResponseEntity<?> response = fileController.getFile(fileId, userDetails);
 
         assertEquals(500, response.getStatusCode().value());
         assertEquals("Failed to fetch file", response.getBody());
@@ -103,7 +103,7 @@ class FileControlerTest {
         when(userDetails.getUsername()).thenReturn(userID);
         when(fileService.createFile(fileDTO, userID)).thenReturn(fileResponseDTO);
 
-        ResponseEntity<?> response = fileControler.createFile(fileDTO, userDetails);
+        ResponseEntity<?> response = fileController.createFile(fileDTO, userDetails);
         assertEquals(201, response.getStatusCode().value());
         assertNotNull(response.getBody());
 
@@ -123,7 +123,7 @@ class FileControlerTest {
         fileTreeDTO.setName("testfile.js");
 
         when(fileService.deleteFile(fileId)).thenReturn(fileTreeDTO);
-        ResponseEntity<?> response = fileControler.deleteFile(fileId);
+        ResponseEntity<?> response = fileController.deleteFile(fileId);
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());
 
@@ -146,7 +146,7 @@ class FileControlerTest {
 
         when(fileService.updateFileContent(fileId, request)).thenReturn(fileTreeDTO);
 
-        ResponseEntity<?> response = fileControler.updateFileContent(fileId, request);
+        ResponseEntity<?> response = fileController.updateFileContent(fileId, request);
 
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());
@@ -164,7 +164,7 @@ class FileControlerTest {
 
         when(fileService.UpdateFileName(fileNameUpdateDTO)).thenReturn(fileNameUpdateDTO);
 
-        ResponseEntity<ApiResponse> response = fileControler.updateFileName(fileNameUpdateDTO);
+        ResponseEntity<ApiResponse> response = fileController.updateFileName(fileNameUpdateDTO);
 
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());

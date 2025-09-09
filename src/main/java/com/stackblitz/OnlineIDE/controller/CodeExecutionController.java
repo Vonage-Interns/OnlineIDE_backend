@@ -23,7 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/code")
 @RequiredArgsConstructor
-public class CodeExecutionControler {
+public class CodeExecutionController {
 
     private final DockerCodeExecutionService service;
     private final FileRepo fileRepo;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/folders")
 @RequiredArgsConstructor
 @CrossOrigin
-public class FolderControler {
+public class FolderController {
 
     private final FoldersService folderService;
 
@@ -60,7 +60,7 @@ public class FolderControler {
             FolderTreeDTO folderTreeDTO =  folderService.deleteFolder(folderId, userId);
 
             ApiResponse apiResponse = new ApiResponse(
-                    "Folder delete succesfully",
+                    "Folder delete successfully",
                     folderTreeDTO
             );
             return ResponseEntity.ok(apiResponse);

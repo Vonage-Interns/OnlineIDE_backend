@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ProjectControlerTest {
+class ProjectControllerTest {
 
     @InjectMocks
-    private ProjectControler projectControler;
+    private ProjectController projectController;
 
     @Mock
     private ProjectService projectService;
@@ -50,7 +50,7 @@ class ProjectControlerTest {
         );
         when(projectService.getProjects(userId)).thenReturn(projects);
 
-        ResponseEntity<?> response = projectControler.getAllProjects(userDetails);
+        ResponseEntity<?> response = projectController.getAllProjects(userDetails);
 
         assertEquals(200, response.getStatusCode().value());
         ApiResponse apiResponse = (ApiResponse) response.getBody();
@@ -63,7 +63,7 @@ class ProjectControlerTest {
         ProjectTreeResponse treeResponse = ProjectTreeResponse.builder().build();
         when(folderService.getRootTree(1L, userId)).thenReturn(treeResponse);
 
-        ResponseEntity<?> response = projectControler.getProjectRootItems(1L, userDetails);
+        ResponseEntity<?> response = projectController.getProjectRootItems(1L, userDetails);
 
         assertEquals(200,response.getStatusCode().value());
         ApiResponse apiResponse = (ApiResponse) response.getBody();
@@ -79,7 +79,7 @@ class ProjectControlerTest {
                 .build();
         when(folderService.getFolderChildren(1L, 2L, userId, 0, 10)).thenReturn(childrenResponse);
 
-        ResponseEntity<FolderChildrenResponseDTO> response = projectControler.getFolderChildren(1L, 2L, 0, 10, userDetails);
+        ResponseEntity<FolderChildrenResponseDTO> response = projectController.getFolderChildren(1L, 2L, 0, 10, userDetails);
 
         assertEquals(200, response.getStatusCode().value());
         assertEquals(childrenResponse, response.getBody());
@@ -93,11 +93,11 @@ class ProjectControlerTest {
 
         when(projectService.createProject(projectDTO, userId)).thenReturn(projectDTO);
 
-        ResponseEntity<?> response = projectControler.createProject(projectDTO, userDetails);
+        ResponseEntity<?> response = projectController.createProject(projectDTO, userDetails);
 
         assertEquals(200, response.getStatusCode().value());
         ApiResponse apiResponse = (ApiResponse) response.getBody();
-        assertEquals("Created project succesfully", apiResponse.getMessage());
+        assertEquals("Created project successfully", apiResponse.getMessage());
         assertEquals(projectDTO, apiResponse.getData());
     }
 
@@ -113,7 +113,7 @@ class ProjectControlerTest {
 
         when(projectService.updateProjectName(updateProjectName, userId)).thenReturn(updatedProject);
 
-        ResponseEntity<ApiResponse<ProjectDTO>> response = projectControler.updateProjectName(updateProjectName, userDetails);
+        ResponseEntity<ApiResponse<ProjectDTO>> response = projectController.updateProjectName(updateProjectName, userDetails);
 
         assertEquals(200,response.getStatusCode().value());
         ApiResponse<ProjectDTO> apiResponse = response.getBody();
@@ -129,7 +129,7 @@ class ProjectControlerTest {
 
         when(projectService.deleteProject(1L, userId)).thenReturn(deletedProject);
 
-        ResponseEntity<?> response = projectControler.deleteProject(1L, userDetails);
+        ResponseEntity<?> response = projectController.deleteProject(1L, userDetails);
 
         assertEquals(200, response.getStatusCode().value());
         ApiResponse apiResponse = (ApiResponse) response.getBody();
